@@ -72,7 +72,9 @@ HashMap的核心成员是一个hash函数（默认为std::hash）和一组桶。
 
 ### 4. 确保const correctness
 
-首先，对于`begin()`, `end()`, `find()`与`at()`，它们返回一个迭代器，因此我们必须设计`const`与非`const`的两个版本。前者被`const`的HashMap对象调用，并返回`const_iterator`，而后者则返回`iterator`
+对于大部分成员函数，例如`empty()`，其不修改对象的任何成员，仅是返回有关HashMap信息的拷贝，只需要保留一个`const`版本即可
+
+对于`begin()`, `end()`, `find()`与`at()`，它们返回一个迭代器，因此我们必须设计`const`与非`const`的两个版本。前者被`const`的HashMap对象调用，并返回`const_iterator`，而后者则返回`iterator`
 
 我们可以利用`static_cast/const_cast`的技巧来简单复用非`const`版本的实现。例如，`const`版本的`begin()`实现只需要一行代码
 ```
